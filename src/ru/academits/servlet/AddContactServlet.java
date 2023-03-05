@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 public class AddContactServlet extends HttpServlet {
@@ -31,9 +32,9 @@ public class AddContactServlet extends HttpServlet {
                 resp.setStatus(500);
             }
 
-            responseStream.write(contactValidationJson.getBytes(Charset.forName("UTF-8")));
+            responseStream.write(contactValidationJson.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            System.out.println("error in GetAllContactsServlet GET: ");
+            System.out.println("error in AddContactServlet POST: ");
             e.printStackTrace();
         }
     }

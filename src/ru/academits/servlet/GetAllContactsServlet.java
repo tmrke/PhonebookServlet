@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class GetAllContactsServlet extends HttpServlet {
@@ -19,7 +20,7 @@ public class GetAllContactsServlet extends HttpServlet {
         try {
             List<Contact> contactList = phoneBookService.getAllContacts();
             String contactListJson = contactConverter.convertToJson(contactList);
-            resp.getOutputStream().write(contactListJson.getBytes(Charset.forName("UTF-8")));
+            resp.getOutputStream().write(contactListJson.getBytes(StandardCharsets.UTF_8));
             resp.getOutputStream().flush();
             resp.getOutputStream().close();
         } catch (Exception e) {

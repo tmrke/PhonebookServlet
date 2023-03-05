@@ -26,13 +26,14 @@ public class DeleteContactServlet extends HttpServlet {
 
             ContactValidation contactValidation = phoneBookService.deleteContact(contact);
             String contactValidationJson = contactValidationConverter.convertToJson(contactValidation);
+
             if (!contactValidation.isValid()) {
                 resp.setStatus(500);
             }
 
             responseStream.write(contactValidationJson.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            System.out.println("error in DeleteContactsServlet POST: ");
+            System.out.println("error in DeleteContactServlet POST: ");
             e.printStackTrace();
         }
     }

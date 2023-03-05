@@ -69,7 +69,7 @@ new Vue({
             self.validation = false;
         },
         deleteContact: function (id) {
-            var contact = new Contact(this.rows[id].firstName, this.rows[id].lastName, this.rows[id].phone);
+            var contact = new Contact(this.rows[id].firstName, this.rows[id].lastName,this.rows[id].phone);
             var self = this;
 
             $.ajax({
@@ -78,10 +78,6 @@ new Vue({
                 data: JSON.stringify(contact)
             }).done(function () {
                 self.serverValidation = false;
-            }).fail(function (ajaxRequest) {
-                var contactValidation = JSON.parse(ajaxRequest.responseText);
-                self.serverError = contactValidation.error;
-                self.serverValidation = true;
             }).always(function () {
                 self.loadData();
             });

@@ -35,7 +35,9 @@ public class ContactDao {
         contactList.add(contact);
     }
 
-    public void delete(Contact contact){
-        contactList.remove(contact);
+    public void delete(Contact contact) {
+        contactList.removeIf(currentContact -> contact.getFirstName().equals(currentContact.getFirstName())
+                && contact.getLastName().equals(currentContact.getLastName())
+                && contact.getPhone().equals(currentContact.getPhone()));
     }
 }
