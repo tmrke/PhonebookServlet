@@ -1,5 +1,7 @@
 package ru.academits.model;
 
+import java.util.Objects;
+
 public class Contact {
     private int id;
     private String firstName;
@@ -48,7 +50,17 @@ public class Contact {
     }
 
     @Override
-    public String toString() {
-        return firstName + ", " + lastName + ", " + phone;
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (o == null || o.getClass() != getClass()) {
+            return false;
+        }
+
+        Contact c = (Contact) o;
+
+        return Objects.equals(firstName, c.firstName) && Objects.equals(lastName, c.lastName) && Objects.equals(phone, c.phone);
     }
 }

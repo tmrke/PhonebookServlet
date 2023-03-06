@@ -15,7 +15,8 @@ new Vue({
         lastName: "",
         phone: "",
         rows: [],
-        serverError: ""
+        serverError: "",
+        regex: /^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
     },
     methods: {
         contactToString: function (contact) {
@@ -69,7 +70,7 @@ new Vue({
             self.validation = false;
         },
         deleteContact: function (id) {
-            var contact = new Contact(this.rows[id].firstName, this.rows[id].lastName,this.rows[id].phone);
+            var contact = new Contact(this.rows[id].firstName, this.rows[id].lastName, this.rows[id].phone);
             var self = this;
 
             $.ajax({
@@ -81,6 +82,13 @@ new Vue({
             }).always(function () {
                 self.loadData();
             });
+        },
+        deleteCheckedContacts: function () {
+            var selectedContacts = this.rows.filter(function (contact) {
+                return contact.checked === true;
+            });
+
+            console.log(selectedContacts);
         },
         loadData: function () {
             var self = this;
@@ -122,6 +130,13 @@ new Vue({
             if (!this.phone) {
                 return {
                     message: "Поле Телефон должно быть заполнено.",
+                    error: true
+                };
+            }
+
+            if (!this.regex.test(this.phone)) {
+                return {
+                    message: "Поле Телефон должно быть заполнено в формате +79995551234.",
                     error: true
                 };
             }

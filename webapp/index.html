@@ -47,7 +47,7 @@
             <template v-if="row.shown">
                 <td>
                     <label class="select-me-label">
-                        <input type="checkbox" class="select-me"/>
+                        <input type="checkbox" class="select-me" v-model="row.checked"/>
                     </label>
                 </td>
                 <td v-text="row.number"></td>
@@ -62,7 +62,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary">Удалить выбранные</button>
+    <button type="button" class="btn btn-primary" v-on:click="deleteCheckedContacts">Удалить выбранные</button>
 
     <br>
 

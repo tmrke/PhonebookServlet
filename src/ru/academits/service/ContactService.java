@@ -11,6 +11,7 @@ public class ContactService {
 
     private boolean isExistContactWithPhone(String phone) {
         List<Contact> contactList = contactDao.getAllContacts();
+
         for (Contact contact : contactList) {
             if (contact.getPhone().equals(phone)) {
                 return true;
@@ -33,6 +34,15 @@ public class ContactService {
         if (contact.getLastName().isEmpty()) {
             contactValidation.setValid(false);
             contactValidation.setError("Поле Фамилия должно быть заполнено.");
+
+            return contactValidation;
+        }
+
+        String regex = "^(\\+7|7|8)?[\\s\\-]?\\(?[0-9]{3}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$";
+
+        if (!contact.getPhone().matches(regex)) {
+            contactValidation.setValid(false);
+            contactValidation.setError("Поле Телефон должно быть заполнено в формате +79995551234.");
 
             return contactValidation;
         }

@@ -18,7 +18,7 @@ public class ContactDao {
         contact.setId(getNewId());
         contact.setFirstName("Иван");
         contact.setLastName("Иванов");
-        contact.setPhone("9123456789");
+        contact.setPhone("+79123456789");
         contactList.add(contact);
     }
 
@@ -36,8 +36,10 @@ public class ContactDao {
     }
 
     public void delete(Contact contact) {
-        contactList.removeIf(currentContact -> contact.getFirstName().equals(currentContact.getFirstName())
-                && contact.getLastName().equals(currentContact.getLastName())
-                && contact.getPhone().equals(currentContact.getPhone()));
+        contactList.removeIf(currentContact -> currentContact.equals(contact));
+    }
+
+    public void deleteChecked(List<Contact> contacts) {
+        contactList.removeAll(contacts);
     }
 }
