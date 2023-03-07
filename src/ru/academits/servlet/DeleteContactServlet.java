@@ -11,15 +11,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeleteContactServlet extends HttpServlet {
-    private ContactService phoneBookService = PhoneBook.phoneBookService;
-    private ContactConverter contactConverter = PhoneBook.contactConverter;
-    private ContactValidationConverter contactValidationConverter = PhoneBook.contactValidationConverter;
+    private final ContactService phoneBookService = PhoneBook.phoneBookService;
+    private final ContactConverter contactConverter = PhoneBook.contactConverter;
+    private final ContactValidationConverter contactValidationConverter = PhoneBook.contactValidationConverter;
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try (ServletOutputStream responseStream = resp.getOutputStream()) {

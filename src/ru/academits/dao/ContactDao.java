@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Anna on 17.06.2017.
  */
 public class ContactDao {
-    private List<Contact> contactList = new ArrayList<>();
-    private AtomicInteger idSequence = new AtomicInteger(0);
+    private final List<Contact> contactList = new ArrayList<>();
+    private final AtomicInteger idSequence = new AtomicInteger(0);
 
     public ContactDao() {
         Contact contact1 = new Contact();
@@ -51,9 +51,5 @@ public class ContactDao {
 
     public void delete(Contact contact) {
         contactList.removeIf(currentContact -> currentContact.equals(contact));
-    }
-
-    public void deleteChecked(List<Contact> contacts) {
-        contactList.removeAll(contacts);
     }
 }

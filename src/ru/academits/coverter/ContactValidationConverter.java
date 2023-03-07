@@ -8,7 +8,7 @@ import ru.academits.service.ContactValidation;
 import java.util.List;
 
 public class ContactValidationConverter {
-    private Gson gson = new GsonBuilder().create();
+    private final Gson gson = new GsonBuilder().create();
 
     public String convertToJson(ContactValidation contactValidation) {
         return gson.toJson(contactValidation);

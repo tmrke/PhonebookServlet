@@ -8,13 +8,12 @@ import ru.academits.service.ContactService;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class GetAllContactsServlet extends HttpServlet {
-    private ContactService phoneBookService = PhoneBook.phoneBookService;
-    private ContactConverter contactConverter = PhoneBook.contactConverter;
+    private final ContactService phoneBookService = PhoneBook.phoneBookService;
+    private final ContactConverter contactConverter = PhoneBook.contactConverter;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {

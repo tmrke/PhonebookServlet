@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactConverter {
-    private Gson gson = new Gson();
-    private JsonParser parser = new JsonParser();
+    private final Gson gson = new Gson();
+    private final JsonParser parser = new JsonParser();
 
     public String convertToJson(List<Contact> contactList) {
         return gson.toJson(contactList);

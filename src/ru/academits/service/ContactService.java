@@ -7,7 +7,7 @@ import ru.academits.model.Contact;
 import java.util.List;
 
 public class ContactService {
-    private ContactDao contactDao = PhoneBook.contactDao;
+    private final ContactDao contactDao = PhoneBook.contactDao;
 
     private boolean isExistContactWithPhone(String phone) {
         List<Contact> contactList = contactDao.getAllContacts();
