@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class AddContactServlet extends HttpServlet {
@@ -24,10 +24,11 @@ public class AddContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try (OutputStream responseStream = resp.getOutputStream()) {
             String contactJson = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-            Contact contact = contactConverter.convertFormJson(contactJson);
+            List<Contact> contact = contactConverter.convertFromJson(contactJson);
 
             ContactValidation contactValidation = phoneBookService.addContact(contact);
             String contactValidationJson = contactValidationConverter.convertToJson(contactValidation);
+
             if (!contactValidation.isValid()) {
                 resp.setStatus(500);
             }

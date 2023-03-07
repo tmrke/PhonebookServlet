@@ -17,68 +17,76 @@ public class ContactService {
                 return true;
             }
         }
+
         return false;
     }
 
-    public ContactValidation validateContact(Contact contact, boolean forDeletable) {
+    public ContactValidation validateContact(List<Contact> contactList, boolean forDeletable) {
         ContactValidation contactValidation = new ContactValidation();
         contactValidation.setValid(true);
-
-        if (contact.getFirstName().isEmpty()) {
-            contactValidation.setValid(false);
-            contactValidation.setError("Поле Имя должно быть заполнено.");
-
-            return contactValidation;
-        }
-
-        if (contact.getLastName().isEmpty()) {
-            contactValidation.setValid(false);
-            contactValidation.setError("Поле Фамилия должно быть заполнено.");
-
-            return contactValidation;
-        }
-
         String regex = "^(\\+7|7|8)?[\\s\\-]?\\(?[0-9]{3}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$";
 
-        if (!contact.getPhone().matches(regex)) {
-            contactValidation.setValid(false);
-            contactValidation.setError("Поле Телефон должно быть заполнено в формате +79995551234.");
+        for (Contact contact : contactList) {
+            if (contact.getFirstName().isEmpty()) {
+                contactValidation.setValid(false);
+                contactValidation.setError("Поле Имя должно быть заполнено.");
 
-            return contactValidation;
-        }
+                return contactValidation;
+            }
 
-        if (contact.getPhone().isEmpty()) {
-            contactValidation.setValid(false);
-            contactValidation.setError("Поле Телефон должно быть заполнено.");
+            if (contact.getLastName().isEmpty()) {
+                contactValidation.setValid(false);
+                contactValidation.setError("Поле Фамилия должно быть заполнено.");
 
-            return contactValidation;
-        }
+                return contactValidation;
+            }
 
-        if (!forDeletable && isExistContactWithPhone(contact.getPhone())) {
-            contactValidation.setValid(false);
-            contactValidation.setError("Номер телефона не должен дублировать другие номера в телефонной книге.");
+            if (!contact.getPhone().matches(regex)) {
+                contactValidation.setValid(false);
+                contactValidation.setError("Поле Телефон должно быть заполнено в формате +79995551234.");
 
-            return contactValidation;
+                return contactValidation;
+            }
+
+            if (contact.getPhone().isEmpty()) {
+                contactValidation.setValid(false);
+                contactValidation.setError("Поле Телефон должно быть заполнено.");
+
+                return contactValidation;
+            }
+
+            if (!forDeletable && isExistContactWithPhone(contact.getPhone())) {
+                contactValidation.setValid(false);
+                contactValidation.setError("Номер телефона не должен дублировать другие номера в телефонной книге.");
+
+                return contactValidation;
+            }
         }
 
         return contactValidation;
     }
 
-    public ContactValidation addContact(Contact contact) {
-        ContactValidation contactValidation = validateContact(contact, false);
+    public ContactValidation addContact(List<Contact> contactList) {
+        if (contactList.size() > 1) {
+            throw new IndexOutOfBoundsException("Количество добавляемых контактов не может быть > 1");
+        }
+
+        ContactValidation contactValidation = validateContact(contactList, false);
 
         if (contactValidation.isValid()) {
-            contactDao.add(contact);
+            contactDao.add(contactList.get(0));
         }
 
         return contactValidation;
     }
 
-    public ContactValidation deleteContact(Contact contact) {
-        ContactValidation contactValidation = validateContact(contact, true);
+    public ContactValidation deleteContact(List<Contact> contactList) {
+        ContactValidation contactValidation = validateContact(contactList, true);
 
-        if (contactValidation.isValid()) {
-            contactDao.delete(contact);
+        for (Contact contact : contactList) {
+            if (contactValidation.isValid()) {
+                contactDao.delete(contact);
+            }
         }
 
         return contactValidation;

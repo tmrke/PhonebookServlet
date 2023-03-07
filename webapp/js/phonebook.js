@@ -49,7 +49,7 @@ new Vue({
 
             var self = this;
 
-            var contact = new Contact(this.firstName, this.lastName, this.phone);
+            var contact = [new Contact(this.firstName, this.lastName, this.phone)];
             $.ajax({
                 type: "POST",
                 url: "/phonebook/add",
@@ -70,7 +70,8 @@ new Vue({
             self.validation = false;
         },
         deleteContact: function (id) {
-            var contact = new Contact(this.rows[id].firstName, this.rows[id].lastName, this.rows[id].phone);
+            var contact = [new Contact(this.rows[id].firstName, this.rows[id].lastName, this.rows[id].phone)];
+
             var self = this;
 
             $.ajax({
@@ -84,11 +85,29 @@ new Vue({
             });
         },
         deleteCheckedContacts: function () {
-            var selectedContacts = this.rows.filter(function (contact) {
-                return contact.checked === true;
+            var selectedRows = this.rows.filter(function (row) {
+                return row.checked === true;
             });
 
-            console.log(selectedContacts);
+            var selectedContacts = [];
+
+            var self = this;
+
+
+            selectedRows.forEach(function (row) {
+                selectedContacts.push(new Contact(row.firstName, row.lastName, row.phone));
+            })
+
+
+            $.ajax({
+                type: "POST",
+                url: "/phonebook/delete",
+                data: JSON.stringify(selectedContacts)
+            }).done(function () {
+                self.serverValidation = false;
+            }).always(function () {
+                self.loadData();
+            });
         },
         loadData: function () {
             var self = this;
