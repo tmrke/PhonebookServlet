@@ -32,7 +32,7 @@
         <tr>
             <th>
                 <label class="select-all-label">
-                    <input type="checkbox" title="Выбрать"/>
+                    <input type="checkbox" v-model="isMainCheckboxChecked" title="Выбрать" v-on:click="selectAllCheckboxes"/>
                 </label>
             </th>
             <th>№</th>

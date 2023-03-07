@@ -11,6 +11,7 @@ new Vue({
     data: {
         validation: false,
         serverValidation: false,
+        isMainCheckboxChecked: false,
         firstName: "",
         lastName: "",
         phone: "",
@@ -103,6 +104,13 @@ new Vue({
                 self.serverValidation = false;
             }).always(function () {
                 self.loadData();
+            });
+        },
+        selectAllCheckboxes: function () {
+            var isChecked = this.isMainCheckboxChecked;
+
+            this.rows.forEach(function (row) {
+                row.checked = !isChecked;
             });
         },
         loadData: function () {
