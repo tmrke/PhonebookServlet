@@ -92,6 +92,10 @@ public class ContactService {
         return contactValidation;
     }
 
+    public List<Contact> getContactsByFilter(String filterString) {
+        return contactDao.getContactsByFilter(filterString);
+    }
+
     public List<Contact> getAllContacts() {
         return contactDao.getAllContacts();
     }

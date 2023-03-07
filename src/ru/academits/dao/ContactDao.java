@@ -30,8 +30,8 @@ public class ContactDao {
 
         Contact contact3 = new Contact();
         contact3.setId(getNewId());
-        contact3.setFirstName("Марина");
-        contact3.setLastName("Маринина");
+        contact3.setFirstName("Иванова");
+        contact3.setLastName("Марина");
         contact3.setPhone("+79999999991");
         contactList.add(contact3);
     }
@@ -51,5 +51,19 @@ public class ContactDao {
 
     public void delete(Contact contact) {
         contactList.removeIf(currentContact -> currentContact.equals(contact));
+    }
+
+    public List<Contact> getContactsByFilter(String filterString) {
+        List<Contact> contactsByFilter = new ArrayList<>();
+
+        for (Contact contact : contactList) {
+            if (contact.getFirstName().toLowerCase().contains(filterString)
+                    || contact.getLastName().toLowerCase().contains(filterString)
+                    || contact.getPhone().toLowerCase().contains(filterString)) {
+                contactsByFilter.add(contact);
+            }
+        }
+
+        return contactsByFilter;
     }
 }

@@ -21,10 +21,10 @@
     <div class="filter-container">
         <label class="mr-1">
             Введите текст:
-            <input type="text" class="form-control input-sm"/>
+            <input type="text" class="form-control input-sm" v-text="filterString" v-model="filterString"/>
         </label>
-        <button class="btn btn-primary">Отфильтровать</button>
-        <button class="btn btn-primary">Сбросить фильтр</button>
+        <button class="btn btn-primary" v-on:click="filter">Отфильтровать</button>
+        <button class="btn btn-primary" v-on:click="dropFilterString">Сбросить фильтр</button>
     </div>
 
     <table class="table table-bordered contact-table">
@@ -32,7 +32,8 @@
         <tr>
             <th>
                 <label class="select-all-label">
-                    <input type="checkbox" v-model="isMainCheckboxChecked" title="Выбрать" v-on:click="selectAllCheckboxes"/>
+                    <input type="checkbox" v-model="isMainCheckboxChecked" title="Выбрать"
+                           v-on:click="selectAllCheckboxes"/>
                 </label>
             </th>
             <th>№</th>

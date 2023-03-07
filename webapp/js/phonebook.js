@@ -16,6 +16,7 @@ new Vue({
         lastName: "",
         phone: "",
         rows: [],
+        filterString: "",
         serverError: "",
         regex: /^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
     },
@@ -112,6 +113,29 @@ new Vue({
             this.rows.forEach(function (row) {
                 row.checked = !isChecked;
             });
+        },
+        filter: function () {
+            var filterString = this.filterString.toLowerCase();
+
+            var self = this;
+
+            $.ajax({
+                type: "POST",
+                url: "/phonebook/filter",
+                data: JSON.stringify(filterString)
+            }).done(function (response) {
+                self.serverValidation = false;
+                var contactListFromServer = JSON.parse(response);
+                self.rows = self.convertContactList(contactListFromServer)
+            }).fail(function (ajaxRequest) {
+                var contactValidation = JSON.parse(ajaxRequest.responseText);
+                self.serverError = contactValidation.error;
+                self.serverValidation = true;
+            });
+        },
+        dropFilterString: function () {
+            this.filterString = "";
+            this.loadData();
         },
         loadData: function () {
             var self = this;

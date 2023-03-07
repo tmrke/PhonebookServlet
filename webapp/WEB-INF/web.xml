@@ -20,6 +20,11 @@
     <servlet-class>ru.academits.servlet.DeleteContactServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>FilterContactServlet</servlet-name>
+    <servlet-class>ru.academits.servlet.FilterContactServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>getAllContactsServlet</servlet-name>
     <url-pattern>/phonebook/get/all</url-pattern>
@@ -33,5 +38,10 @@
   <servlet-mapping>
     <servlet-name>DeleteContactServlet</servlet-name>
     <url-pattern>/phonebook/delete</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>FilterContactServlet</servlet-name>
+    <url-pattern>/phonebook/filter</url-pattern>
   </servlet-mapping>
 </web-app>
