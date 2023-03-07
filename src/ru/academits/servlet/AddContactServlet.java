@@ -7,6 +7,7 @@ import ru.academits.model.Contact;
 import ru.academits.service.ContactService;
 import ru.academits.service.ContactValidation;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +17,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AddContactServlet extends HttpServlet {
-
     private ContactService phoneBookService = PhoneBook.phoneBookService;
     private ContactConverter contactConverter = PhoneBook.contactConverter;
     private ContactValidationConverter contactValidationConverter = PhoneBook.contactValidationConverter;
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        try (OutputStream responseStream = resp.getOutputStream()) {
+        try (ServletOutputStream responseStream = resp.getOutputStream()) {
             String contactJson = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
             List<Contact> contact = contactConverter.convertFromJson(contactJson);
 

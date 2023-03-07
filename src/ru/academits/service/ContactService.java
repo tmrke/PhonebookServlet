@@ -68,7 +68,7 @@ public class ContactService {
 
     public ContactValidation addContact(List<Contact> contactList) {
         if (contactList.size() > 1) {
-            throw new IndexOutOfBoundsException("Количество добавляемых контактов не может быть > 1");
+            throw new IndexOutOfBoundsException("Количество добавляемых контактов не может быть больше одного.");
         }
 
         ContactValidation contactValidation = validateContact(contactList, false);

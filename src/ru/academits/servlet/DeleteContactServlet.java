@@ -24,9 +24,6 @@ public class DeleteContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try (ServletOutputStream responseStream = resp.getOutputStream()) {
             String contactJson = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-
-            System.out.println(contactJson);
-
             List<Contact> toDeleteContacts = contactConverter.convertFromJson(contactJson);
 
             ContactValidation contactValidation = phoneBookService.deleteContact(toDeleteContacts);

@@ -71,7 +71,6 @@ new Vue({
         },
         deleteContact: function (id) {
             var contact = [new Contact(this.rows[id].firstName, this.rows[id].lastName, this.rows[id].phone)];
-
             var self = this;
 
             $.ajax({
@@ -90,14 +89,11 @@ new Vue({
             });
 
             var selectedContacts = [];
-
             var self = this;
-
 
             selectedRows.forEach(function (row) {
                 selectedContacts.push(new Contact(row.firstName, row.lastName, row.phone));
             })
-
 
             $.ajax({
                 type: "POST",
